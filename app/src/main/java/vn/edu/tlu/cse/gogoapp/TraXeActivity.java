@@ -15,7 +15,7 @@ public class TraXeActivity extends AppCompatActivity {
 
     private FirebaseFirestore db;
     private String userId;
-
+//
     private TextView txtThongTinXe;
     private Button btnTraXe;
 

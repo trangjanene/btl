@@ -10,8 +10,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class KhachHangHomeActivity extends AppCompatActivity {
-
-    private Button btnThueXe, btnDangKyVeThang, btnDangXuat, btnLichSu;
+//
+    private Button btnNaptien, btnThueXe, btnDangKyVeThang, btnDangXuat, btnLichSu;
     private void checkIfUserHasReturnedBike() {
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -38,10 +38,17 @@ public class KhachHangHomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_khach_hang_home);
 
+        btnNaptien = findViewById(R.id.btnNaptien);
         btnThueXe = findViewById(R.id.btnThueXe);
         btnDangKyVeThang = findViewById(R.id.btnVeThang);
         btnDangXuat = findViewById(R.id.btnDangXuat);
         btnLichSu = findViewById(R.id.btnLichSu); // Gán nút lịch sử
+
+        //Khi người dùng bấm nạp tiền
+        btnNaptien.setOnClickListener(v -> {
+            Intent intent = new Intent(KhachHangHomeActivity.this, NaptienActivity.class);
+            startActivity(intent);
+        });
 
         // Khi người dùng bấm thuê xe
         btnThueXe.setOnClickListener(v -> {

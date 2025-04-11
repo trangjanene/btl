@@ -9,7 +9,7 @@ import com.google.firebase.auth.*;
 import com.google.firebase.firestore.*;
 
 public class LoginActivity extends AppCompatActivity {
-
+//
     EditText edtEmail, edtPassword;
     Button btnLogin;
     TextView txtToRegister, txtForgotPassword;

@@ -34,7 +34,7 @@ public class ThueXeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_thue_xe);
-
+//
         listView = findViewById(R.id.listView);
         db = FirebaseFirestore.getInstance();
 

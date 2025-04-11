@@ -37,7 +37,7 @@ public class HistoryActivity extends AppCompatActivity {
 
         loadRentalHistory();
     }
-
+//
     private void loadRentalHistory() {
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 

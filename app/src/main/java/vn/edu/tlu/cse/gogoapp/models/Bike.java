@@ -7,7 +7,7 @@ public class Bike implements Serializable {
     private String name;
     private String pricePerHour;
     private String status;
-
+//
     public Bike(String id, String name, String pricePerHour, String status) {
         this.id = id; // Khởi tạo id
         this.name = name;

@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity {
-
+//
     EditText edtHoTen, edtEmail, edtMatKhau, edtSoDienThoai;
     RadioGroup radioGroupRole;
     RadioButton rbNhanVien, rbKhachHang;
@@ -54,7 +54,7 @@ public class RegisterActivity extends AppCompatActivity {
         String matKhau = edtMatKhau.getText().toString().trim();
         String sdt = edtSoDienThoai.getText().toString().trim();
         String role = rbNhanVien.isChecked() ? "nhanvien" : "khachhang";
-
+        String sotien = "10";
         if (TextUtils.isEmpty(hoTen) || TextUtils.isEmpty(email) || TextUtils.isEmpty(matKhau) || TextUtils.isEmpty(sdt)) {
             Toast.makeText(this, "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
             return;
@@ -69,7 +69,7 @@ public class RegisterActivity extends AppCompatActivity {
                         user.put("email", email);
                         user.put("sdt", sdt);
                         user.put("role", role);
-
+                        user.put("sotien", sotien);
                         db.collection("users").document(uid)
                                 .set(user)
                                 .addOnSuccessListener(aVoid -> {

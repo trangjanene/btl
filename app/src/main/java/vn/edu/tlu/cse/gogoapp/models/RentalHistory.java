@@ -14,7 +14,7 @@ public class RentalHistory {
     public String getBikeName() {
         return bikeName;
     }
-
+//
     public String getPrice() {
         return price;
     }

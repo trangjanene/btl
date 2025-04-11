@@ -30,7 +30,7 @@ public class BikeAdapter extends RecyclerView.Adapter<BikeAdapter.BikeViewHolder
         this.context = context;
         db = FirebaseFirestore.getInstance();
     }
-
+//
     @Override
     public BikeViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_bike, parent, false);

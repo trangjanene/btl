@@ -67,7 +67,7 @@ public class DangKyVeThangActivity extends AppCompatActivity {
     private void kiemTraGoiHienTai() {
         db.collection("subscriptions")
                 .document(uid)
-                .get()
+                .get()//
                 .addOnSuccessListener(doc -> {
                     if (doc.exists()) {
                         String goi = doc.getString("goi");

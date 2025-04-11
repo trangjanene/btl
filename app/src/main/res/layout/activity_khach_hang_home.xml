@@ -33,6 +33,19 @@
             android:scaleType="centerInside" />
 
 
+        <!-- Nút Nạp tiền-->
+        <Button
+            android:id="@+id/btnNaptien"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="8dp"
+            android:text="🚲 Ví thanh toán"
+            android:backgroundTint="#4CAF50"
+            android:textColor="#FFFFFF"
+            android:padding="12dp"
+            android:textSize="16sp"
+            android:background="@drawable/rounded_button" />
+
         <!-- Nút Thuê xe -->
         <Button
             android:id="@+id/btnThueXe"

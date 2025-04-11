@@ -19,7 +19,7 @@ public class RentalAdapter extends RecyclerView.Adapter<RentalAdapter.ViewHolder
     public RentalAdapter(List<RentalHistory> rentalList) {
         this.rentalList = rentalList;
     }
-
+//
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_rental_history, parent, false);

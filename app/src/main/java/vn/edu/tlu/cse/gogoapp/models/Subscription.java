@@ -12,7 +12,7 @@ public class Subscription {
         this.goi = goi;
         this.ngayDangKy = ngayDangKy;
     }
-
+//
     public String getUid() { return uid; }
     public String getGoi() { return goi; }
     public long getNgayDangKy() { return ngayDangKy; }

@@ -11,7 +11,7 @@ public class ChiTietThueXeActivity extends AppCompatActivity {
     TextView txtBikeName, txtPrice, txtStatus;
     Button btnThuongThue;
     FirebaseFirestore db;
-
+//
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
