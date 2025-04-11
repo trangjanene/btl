@@ -7,23 +7,45 @@
     android:background="#E0F7FA"
     android:padding="24dp">
 
+    <!-- Logo hình xe đạp -->
     <ImageView
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
         android:src="@drawable/bike_icon"
-        android:layout_gravity="center"/>
+        android:contentDescription="@null"
+        android:layout_marginTop="48dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/circle_bg"
+        android:padding="24dp" />
 
+    <!-- Tiêu đề -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Chào mừng đến với GOGO"
+        android:textSize="22sp"
+        android:textColor="#00796B"
+        android:textStyle="bold"
+        android:layout_marginBottom="32dp" />
+
+    <!-- Nút đăng nhập -->
     <Button
         android:id="@+id/btnDangNhap"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Đăng Nhập"
-        android:layout_marginTop="32dp"/>
+        android:text="Đăng nhập"
+        android:textStyle="bold"
+        android:textColor="@android:color/white"
+        android:background="@drawable/bg_button"
+        android:layout_marginBottom="16dp"/>
 
+    <!-- Nút đăng ký -->
     <Button
         android:id="@+id/btnDangKy"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Đăng Ký"
-        android:layout_marginTop="16dp"/>
+        android:text="Đăng ký"
+        android:textStyle="bold"
+        android:textColor="@android:color/white"
+        android:background="@drawable/bg_button"/>
 </LinearLayout>

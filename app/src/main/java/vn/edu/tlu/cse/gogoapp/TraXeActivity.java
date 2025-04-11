@@ -2,22 +2,25 @@ package vn.edu.tlu.cse.gogoapp;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.*;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.*;
 
-import java.util.Date;
-
 public class TraXeActivity extends AppCompatActivity {
 
-    TextView txtThongTinXe;
-    Button btnTraXe;
+    private FirebaseFirestore db;
+    private String userId;
 
-    FirebaseFirestore db;
-    String uid;
-    DocumentSnapshot rentalDoc;
+    private TextView txtThongTinXe;
+    private Button btnTraXe;
+
+    private String bikeIdDangThue = null;
+    private String historyId = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,57 +29,68 @@ public class TraXeActivity extends AppCompatActivity {
 
         txtThongTinXe = findViewById(R.id.txtThongTinXe);
         btnTraXe = findViewById(R.id.btnTraXe);
-
         db = FirebaseFirestore.getInstance();
-        uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        btnTraXe.setEnabled(false); // Tạm tắt nút cho đến khi kiểm tra xong
 
         kiemTraXeDangThue();
 
-        btnTraXe.setOnClickListener(v -> thucHienTraXe());
+        btnTraXe.setOnClickListener(v -> traXe());
     }
 
     private void kiemTraXeDangThue() {
-        db.collection("rentals")
-                .whereEqualTo("uid", uid)
-                .whereEqualTo("isActive", true)
+        db.collection("history")
+                .whereEqualTo("userId", userId)
+                .whereEqualTo("ended", false)
                 .limit(1)
                 .get()
-                .addOnSuccessListener(query -> {
-                    if (!query.isEmpty()) {
-                        rentalDoc = query.getDocuments().get(0);
-                        String bikeId = rentalDoc.getString("bikeId");
-                        long start = rentalDoc.getLong("startTime");
+                .addOnSuccessListener(querySnapshot -> {
+                    if (!querySnapshot.isEmpty()) {
+                        DocumentSnapshot doc = querySnapshot.getDocuments().get(0);
+                        bikeIdDangThue = doc.getString("bikeId");
+                        historyId = doc.getId();
 
-                        txtThongTinXe.setText("Bạn đang thuê xe: " + bikeId + "\nBắt đầu: " + new Date(start));
+                        String bikeName = doc.getString("bikeName");
+                        String price = doc.getString("price");
+                        String date = doc.getString("date");
+
+                        txtThongTinXe.setText("Xe: " + bikeName + "\nGiá: " + price + "\nNgày thuê: " + date);
                         btnTraXe.setEnabled(true);
                     } else {
-                        txtThongTinXe.setText("Bạn hiện không thuê xe nào.");
+                        txtThongTinXe.setText("Bạn hiện không có xe nào đang thuê.");
                         btnTraXe.setEnabled(false);
                     }
                 })
                 .addOnFailureListener(e -> {
-                    Toast.makeText(this, "Lỗi kiểm tra thuê xe", Toast.LENGTH_SHORT).show();
+                    txtThongTinXe.setText("Lỗi khi kiểm tra thông tin xe.");
+                    btnTraXe.setEnabled(false);
                 });
     }
 
-    private void thucHienTraXe() {
-        if (rentalDoc == null) return;
+    private void traXe() {
+        if (bikeIdDangThue == null || historyId == null) {
+            Toast.makeText(this, "Không có xe để trả", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
-        String bikeId = rentalDoc.getString("bikeId");
-        String rentalId = rentalDoc.getId();
-
-        // 1. Cập nhật trạng thái bản ghi rental
-        DocumentReference rentalRef = db.collection("rentals").document(rentalId);
-        rentalRef.update(
-                "isActive", false,
-                "returnTime", new Date().getTime()
-        );
-
-        // 2. Cập nhật xe thành available
-        DocumentReference bikeRef = db.collection("bikes").document(bikeId);
-        bikeRef.update("status", "available");
-
-        Toast.makeText(this, "Trả xe thành công!", Toast.LENGTH_SHORT).show();
-        finish(); // quay về màn hình trước
+        // Cập nhật ended = true trong history
+        db.collection("history").document(historyId)
+                .update("ended", true)
+                .addOnSuccessListener(aVoid -> {
+                    // Cập nhật trạng thái xe thành available
+                    db.collection("bike").document(bikeIdDangThue)
+                            .update("status", "available")
+                            .addOnSuccessListener(aVoid2 -> {
+                                Toast.makeText(this, "Trả xe thành công!", Toast.LENGTH_SHORT).show();
+                                finish(); // Quay về màn hình trước
+                            })
+                            .addOnFailureListener(e -> {
+                                Toast.makeText(this, "Lỗi cập nhật trạng thái xe", Toast.LENGTH_SHORT).show();
+                            });
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(this, "Lỗi khi cập nhật lịch sử thuê", Toast.LENGTH_SHORT).show();
+                });
     }
 }

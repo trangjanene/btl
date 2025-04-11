@@ -1,32 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:background="#F2F2F2">
 
-    <Button
-        android:id="@+id/btnThueXe"
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Thuê Xe" />
+        android:orientation="vertical"
+        android:padding="24dp"
+        android:gravity="center_horizontal">
 
-    <Button
-        android:id="@+id/btnVeThang"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Vé Tháng" />
+        <TextView
+            android:id="@+id/tvChaoKhachHang"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="👋 Xin chào, Khách hàng!"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#333333"
+            android:layout_marginBottom="16dp"
+            android:gravity="center" />
 
-    <Button
-        android:id="@+id/btnLichSu"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Lịch Sử" />
+        <!-- Hình ảnh xe đạp -->
+        <ImageView
+            android:id="@+id/imgXeDap"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_marginBottom="24dp"
+            android:src="@drawable/bike_icon"
+            android:scaleType="centerInside" />
 
-    <Button
-        android:id="@+id/btnDangXuat"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Đăng Xuất" />
 
-</LinearLayout>
+        <!-- Nút Thuê xe -->
+        <Button
+            android:id="@+id/btnThueXe"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="8dp"
+            android:text="🚲 Thuê Xe"
+            android:backgroundTint="#4CAF50"
+            android:textColor="#FFFFFF"
+            android:padding="12dp"
+            android:textSize="16sp"
+            android:background="@drawable/rounded_button" />
+
+        <!-- Nút Vé tháng -->
+        <Button
+            android:id="@+id/btnVeThang"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="8dp"
+            android:text="📅 Vé Tháng"
+            android:backgroundTint="#2196F3"
+            android:textColor="#FFFFFF"
+            android:padding="12dp"
+            android:textSize="16sp"
+            android:background="@drawable/rounded_button" />
+
+        <!-- Nút Lịch sử -->
+        <Button
+            android:id="@+id/btnLichSu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="8dp"
+            android:text="🕓 Lịch Sử"
+            android:backgroundTint="#FF9800"
+            android:textColor="#FFFFFF"
+            android:padding="12dp"
+            android:textSize="16sp"
+            android:background="@drawable/rounded_button" />
+
+        <!-- Nút Trả xe -->
+        <Button
+            android:id="@+id/btnTraXe"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="8dp"
+            android:text="🔁 Trả Xe"
+            android:backgroundTint="#9C27B0"
+            android:textColor="#FFFFFF"
+            android:padding="12dp"
+            android:textSize="16sp"
+            android:background="@drawable/rounded_button" />
+
+        <!-- Nút Đăng xuất -->
+        <Button
+            android:id="@+id/btnDangXuat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="🚪 Đăng Xuất"
+            android:backgroundTint="#F44336"
+            android:textColor="#FFFFFF"
+            android:padding="12dp"
+            android:textSize="16sp"
+            android:background="@drawable/rounded_button" />
+
+    </LinearLayout>
+</ScrollView>

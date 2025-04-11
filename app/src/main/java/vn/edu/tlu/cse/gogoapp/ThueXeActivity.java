@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.HashMap;
 import java.util.Map;
+import android.util.Log;
 
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -45,6 +46,7 @@ public class ThueXeActivity extends AppCompatActivity {
                         String name = document.getString("name");
                         String pricePerHour = document.getString("price_per_hour");
                         String status = document.getString("status");
+                        Log.d("DEBUG_XE", "Tìm thấy xe: " + name + " - Trạng thái: " + status);
 
                         if ("available".equals(status)) {
                             bikeList.add(new Bike(id, name, pricePerHour, status));
@@ -85,6 +87,9 @@ public class ThueXeActivity extends AppCompatActivity {
                     historyData.put("bikeName", bikeName);
                     historyData.put("price", price);
                     historyData.put("date", date);
+                    historyData.put("startTime", System.currentTimeMillis()); // <-- dòng này
+                    historyData.put("ended", false);
+
 
                     db.collection("history")
                             .add(historyData)

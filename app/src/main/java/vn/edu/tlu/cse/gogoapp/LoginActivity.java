@@ -12,7 +12,7 @@ public class LoginActivity extends AppCompatActivity {
 
     EditText edtEmail, edtPassword;
     Button btnLogin;
-    TextView txtToRegister;
+    TextView txtToRegister, txtForgotPassword;
 
     FirebaseAuth auth;
     FirebaseFirestore db;
@@ -26,6 +26,7 @@ public class LoginActivity extends AppCompatActivity {
         edtPassword = findViewById(R.id.edtPassword);
         btnLogin = findViewById(R.id.btnLogin);
         txtToRegister = findViewById(R.id.txtToRegister);
+        txtForgotPassword = findViewById(R.id.txtForgotPassword); // THÊM DÒNG NÀY
 
         auth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
@@ -34,6 +35,10 @@ public class LoginActivity extends AppCompatActivity {
 
         txtToRegister.setOnClickListener(v ->
                 startActivity(new Intent(LoginActivity.this, RegisterActivity.class))
+        );
+
+        txtForgotPassword.setOnClickListener(v ->  // THÊM DÒNG NÀY
+                startActivity(new Intent(LoginActivity.this, ForgotPasswordActivity.class))
         );
     }
 
