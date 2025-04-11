@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "622223758943",
+    "project_id": "gogoapp-15b14",
+    "storage_bucket": "gogoapp-15b14.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:622223758943:android:bc4334a564b53ea5e0adea",
+        "android_client_info": {
+          "package_name": "vn.edu.tlu.cse.gogoapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBbPif4_j5y1MGvvVotiCloBy7_gownpQo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
