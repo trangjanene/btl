@@ -1,4 +1,5 @@
 package vn.edu.tlu.cse.gogoapp;
+import vn.edu.tlu.cse.gogoapp.HistoryActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,11 +19,10 @@ public class KhachHangHomeActivity extends AppCompatActivity {
 
         db.collection("history")
                 .whereEqualTo("userId", userId)
-                .whereEqualTo("ended", false) // xe chưa được trả
+                .whereEqualTo("ended", false)
                 .get()
                 .addOnSuccessListener(querySnapshot -> {
                     if (querySnapshot.isEmpty()) {
-                        // Không có xe nào đang thuê => cho vào lịch sử
                         startActivity(new Intent(KhachHangHomeActivity.this, HistoryActivity.class));
                     } else {
                         Toast.makeText(this, "Bạn cần trả xe trước khi xem lịch sử.", Toast.LENGTH_SHORT).show();
@@ -42,21 +42,18 @@ public class KhachHangHomeActivity extends AppCompatActivity {
         btnThueXe = findViewById(R.id.btnThueXe);
         btnDangKyVeThang = findViewById(R.id.btnVeThang);
         btnDangXuat = findViewById(R.id.btnDangXuat);
-        btnLichSu = findViewById(R.id.btnLichSu); // Gán nút lịch sử
+        btnLichSu = findViewById(R.id.btnLichSu);
 
-        //Khi người dùng bấm nạp tiền
         btnNaptien.setOnClickListener(v -> {
             Intent intent = new Intent(KhachHangHomeActivity.this, NaptienActivity.class);
             startActivity(intent);
         });
 
-        // Khi người dùng bấm thuê xe
         btnThueXe.setOnClickListener(v -> {
             Intent intent = new Intent(KhachHangHomeActivity.this, ThueXeActivity.class);
             startActivity(intent);
         });
 
-        // Khi người dùng bấm đăng ký vé tháng
         btnDangKyVeThang.setOnClickListener(v -> {
             Intent intent = new Intent(KhachHangHomeActivity.this, DangKyVeThangActivity.class);
             startActivity(intent);

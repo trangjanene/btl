@@ -1,34 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:padding="16dp"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/bg_item_rental"
-    android:layout_marginBottom="8dp">
+    android:layout_margin="8dp"
+    android:padding="16dp">
 
-    <TextView
-        android:id="@+id/txtBikeName"
-        android:text="Xe: ..."
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-    <TextView
-        android:id="@+id/txtPrice"
-        android:text="Giá: ..."
-        android:textSize="14sp"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp" />
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/txtDate"
-        android:text="Ngày: ..."
-        android:textSize="14sp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp" />
+        <TextView
+            android:id="@+id/txtBikeName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tên xe"
+            android:textStyle="bold"
+            android:textSize="18sp" />
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/txtPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Giá thuê: 0 VNĐ" />
+
+        <TextView
+            android:id="@+id/txtDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ngày thuê: 01/01/2025 12:00" />
+
+        <TextView
+            android:id="@+id/txtEndTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ngày trả: 01/01/2025 14:00" />
+
+        <TextView
+            android:id="@+id/txtTotalAmount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Số tiền đã trả: 0 VNĐ"
+            android:textColor="@android:color/holo_red_dark" />
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

@@ -25,19 +25,16 @@ public class HistoryActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_lich_su_thue); // Layout bạn đã tạo
-
+        setContentView(R.layout.activity_lich_su_thue);
         recyclerView = findViewById(R.id.recyclerView);
-
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
         rentalList = new ArrayList<>();
         rentalAdapter = new RentalAdapter(rentalList);
         recyclerView.setAdapter(rentalAdapter);
 
         loadRentalHistory();
     }
-//
+
     private void loadRentalHistory() {
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
@@ -51,9 +48,10 @@ public class HistoryActivity extends AppCompatActivity {
                         String bikeName = doc.getString("bikeName");
                         String price = doc.getString("price");
                         Long startTime = doc.getLong("startTime");
-
-                        if (bikeName != null && price != null && startTime != null) {
-                            rentalList.add(new RentalHistory(bikeName, price, startTime));
+                        Long endTime = doc.getLong("endTime");
+                        Long totalAmount = doc.getLong("totalAmount");
+                        if (bikeName != null && price != null && startTime != null && endTime != null && totalAmount != null) {
+                            rentalList.add(new RentalHistory(bikeName, price, startTime, endTime, totalAmount));
                         }
                     }
                     rentalAdapter.notifyDataSetChanged();

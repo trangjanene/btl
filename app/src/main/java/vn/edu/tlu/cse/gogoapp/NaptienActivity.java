@@ -1,77 +1,102 @@
 package vn.edu.tlu.cse.gogoapp;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
-
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.DocumentSnapshot;
 
 public class NaptienActivity extends AppCompatActivity {
 
-    private FirebaseFirestore db;
-    private String userId;
-    //
+    private TextView balanceTextView;
     private EditText edtSotien;
     private Button btnTiennap;
-    private TextView txtSotien;
 
-    int tien = 0;
+    private FirebaseFirestore db;
+    private String userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_naptien);
 
-        txtSotien = findViewById(R.id.balance);
+        // Khởi tạo các view
+        balanceTextView = findViewById(R.id.balance);
         edtSotien = findViewById(R.id.edtSotien);
         btnTiennap = findViewById(R.id.btnTiennap);
+
         db = FirebaseFirestore.getInstance();
         userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        loadSoTienConLai();
-        btnTiennap.setOnClickListener(v -> naptien());
 
+        loadBalance();
+
+        btnTiennap.setOnClickListener(v -> napTien());
     }
 
-    private void loadSoTienConLai() {
-        db.collection("users")
-                .whereEqualTo("sotien", userId)
-                .whereEqualTo("ended", false)
-                .limit(1)
+    private void loadBalance() {
+        db.collection("users").document(userId)
                 .get()
-                .addOnSuccessListener(querySnapshot -> {
-                    if (!querySnapshot.isEmpty()) {
-                        DocumentSnapshot doc = querySnapshot.getDocuments().get(0);
-                        String tien = doc.getString("sotien");
-                        txtSotien.setText(tien);
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        Long balance = documentSnapshot.getLong("wallet");
+                        if (balance == null) {
+                            balance = 0L;
+                        }
+                        // Hiển thị số dư
+                        balanceTextView.setText(balance + " đ");
                     } else {
-                       // txtThongTinXe.setText("Bạn hiện không có xe nào đang thuê.");
+                        Toast.makeText(this, "Không tìm thấy thông tin người dùng", Toast.LENGTH_SHORT).show();
                     }
                 })
                 .addOnFailureListener(e -> {
-                    //txtThongTinXe.setText("Lỗi khi kiểm tra thông tin xe.");
-                   // btnTraXe.setEnabled(false);
+                    Toast.makeText(this, "Lỗi khi tải số dư: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                 });
     }
 
-    private void naptien() {
-        String sotien = edtSotien.getText().toString().trim();
-        /*if (bikeIdDangThue == null || historyId == null) {
-            Toast.makeText(this, "Không có xe để trả", Toast.LENGTH_SHORT).show();
-            return;
-        }*/
+    private void napTien() {
+        String amountStr = edtSotien.getText().toString().trim();
 
-        // Cập nhật ended = true trong history
-        db.collection("user").document("sotien")
-                .update("ended", true);
+        if (amountStr.isEmpty()) {
+            Toast.makeText(this, "Vui lòng nhập số tiền", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        long amount = Long.parseLong(amountStr);
+
+        if (amount <= 0) {
+            Toast.makeText(this, "Số tiền phải lớn hơn 0", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        db.collection("users").document(userId)
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        Long currentBalance = documentSnapshot.getLong("wallet");
+                        if (currentBalance == null) {
+                            currentBalance = 0L;
+                        }
+
+                        long newBalance = currentBalance + amount;
+
+                        db.collection("users").document(userId)
+                                .update("wallet", newBalance)
+                                .addOnSuccessListener(aVoid -> {
+                                    Toast.makeText(this, "Nạp tiền thành công!", Toast.LENGTH_SHORT).show();
+                                    loadBalance();
+                                })
+                                .addOnFailureListener(e -> {
+                                    Toast.makeText(this, "Lỗi khi nạp tiền: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                });
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(this, "Lỗi khi lấy thông tin ví: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                });
     }
 }

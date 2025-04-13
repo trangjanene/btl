@@ -26,6 +26,10 @@ public class DangKyVeThangActivity extends AppCompatActivity {
     FirebaseFirestore db;
     String uid;
 
+    long giaVe1Thang = 100000;
+    long giaVe3Thang = 250000;
+    long giaVe6Thang = 450000;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +54,52 @@ public class DangKyVeThangActivity extends AppCompatActivity {
         String goi = spinnerGoi.getSelectedItem().toString();
         long ngayDangKy = System.currentTimeMillis();
 
+        long giaVe = getGiaVe(goi);
+
+        db.collection("users").document(uid)
+                .get()
+                .addOnSuccessListener(doc -> {
+                    if (doc.exists()) {
+                        Long sodu = doc.getLong("wallet");
+                        if (sodu == null) sodu = 0L;
+                        if (sodu >= giaVe) {
+                            capNhatSoDu(sodu - giaVe);
+                            dangKyVaoSubscriptions(goi, ngayDangKy);
+                        } else {
+                            Toast.makeText(this, "Số dư không đủ để đăng ký vé tháng!", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(this, "Lỗi khi lấy thông tin ví", Toast.LENGTH_SHORT).show();
+                });
+    }
+
+    private long getGiaVe(String goi) {
+        switch (goi) {
+            case "1 tháng":
+                return giaVe1Thang;
+            case "3 tháng":
+                return giaVe3Thang;
+            case "6 tháng":
+                return giaVe6Thang;
+            default:
+                return 0;
+        }
+    }
+
+    private void capNhatSoDu(long newBalance) {
+        db.collection("users").document(uid)
+                .update("wallet", newBalance)
+                .addOnSuccessListener(aVoid -> {
+                    Toast.makeText(this, "Cập nhật ví thành công!", Toast.LENGTH_SHORT).show();
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(this, "Lỗi khi trừ tiền ví", Toast.LENGTH_SHORT).show();
+                });
+    }
+
+    private void dangKyVaoSubscriptions(String goi, long ngayDangKy) {
         Subscription sub = new Subscription(uid, goi, ngayDangKy);
 
         db.collection("subscriptions")
@@ -63,11 +113,10 @@ public class DangKyVeThangActivity extends AppCompatActivity {
                     Toast.makeText(this, "Lỗi: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                 });
     }
-
     private void kiemTraGoiHienTai() {
         db.collection("subscriptions")
                 .document(uid)
-                .get()//
+                .get()
                 .addOnSuccessListener(doc -> {
                     if (doc.exists()) {
                         String goi = doc.getString("goi");

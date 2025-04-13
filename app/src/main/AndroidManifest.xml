@@ -12,9 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GoGo"
         tools:targetApi="31">
-        <activity
-            android:name=".NaptienActivity"
-            android:exported="false" />
+
         <activity
             android:name=".ForgotPasswordActivity"
             android:exported="false" />
@@ -23,6 +21,9 @@
             android:exported="false" />
         <activity
             android:name=".NhanVienHomeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".NaptienActivity"
             android:exported="false" />
         <activity
             android:name=".TraXeActivity"
